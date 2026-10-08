@@ -10,12 +10,15 @@
   --color-clay-deep: #b95538;
   --color-well: #26221d;
 
-  --font-display:
-    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia,
-    "Songti SC", serif;
   --font-sans:
-    "Avenir Next", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
-    Arial, "PingFang SC", sans-serif;
+    'Yukino', 'Maple Mono', Menlo, 'Cascadia Code', 'Sarasa Gothic SC', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --font-display:
+    'Yukino', 'Maple Mono', Menlo, 'Cascadia Code', 'Sarasa Gothic SC', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --font-mono:
+    'Yukino', 'Maple Mono', Menlo, 'Cascadia Code', 'Sarasa Gothic SC', 'PingFang SC',
+    'Microsoft YaHei', monospace;
 }
 
 @layer base {
