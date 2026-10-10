@@ -6,8 +6,6 @@ export interface RandomDraw {
   value: number;
 }
 
-// Mulberry32: deterministic 32-bit PRNG advanced one step at a time so the
-// seed can travel inside the immutable game state.
 export function nextRandom(seed: number): RandomDraw {
   const nextSeed = (seed + 0x6d2b79f5) >>> 0;
   let value = nextSeed;
@@ -48,8 +46,6 @@ export interface BagDraw {
   rngSeed: number;
 }
 
-// Draws pieces from the 7-bag, refilling with a seeded Fisher-Yates shuffle
-// whenever the bag runs dry.
 export function drawBagPieces(
   bag: readonly TetrominoType[],
   rngSeed: number,

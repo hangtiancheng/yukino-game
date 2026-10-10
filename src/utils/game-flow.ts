@@ -33,10 +33,6 @@ const LINE_CLEAR_LABELS: readonly string[] = [
   "TETRIS!",
 ];
 
-// ---------------------------------------------------------------------------
-// Phase transitions
-// ---------------------------------------------------------------------------
-
 export function startGame(state: GameState): GameState {
   return {
     ...state,
@@ -96,11 +92,6 @@ export function getLineClearMessage(
   }
   return message;
 }
-
-// ---------------------------------------------------------------------------
-// Piece movement. Every transition is a pure GameState -> GameState function
-// guarded by phase, so callers never need to null-check the active piece.
-// ---------------------------------------------------------------------------
 
 export function tryShift(
   state: GameState,
@@ -181,10 +172,6 @@ export function holdPiece(state: GameState): GameState {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Locking, clearing and spawning
-// ---------------------------------------------------------------------------
-
 export function lockActivePiece(state: GameState): GameState {
   const active = state.active;
   if (state.phase !== "running" || active === null) {
@@ -205,8 +192,6 @@ export function lockActivePiece(state: GameState): GameState {
   let backToBackApplied = false;
   if (clearedRows > 0) {
     backToBackApplied = state.backToBack && clearedRows === 4;
-    // Awards scale with the level reached before this clear, matching the
-    // guideline: the level-up from these lines applies to future clears.
     award += getLineClearAward(
       clearedRows,
       state.stats.level,
@@ -256,14 +241,6 @@ export function spawnNextPiece(state: GameState): GameState {
   return spawnPieceOfType(popped.state, popped.type);
 }
 
-// ---------------------------------------------------------------------------
-// Shared helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Move/rotate resets the lock delay while the piece is grounded, capped at
- * MAX_LOCK_RESETS so a piece resting on the stack always locks eventually.
- */
 function afterPieceMoved(state: GameState): GameState {
   const active = state.active;
   if (active === null) {
@@ -276,7 +253,6 @@ function afterPieceMoved(state: GameState): GameState {
   return { ...state, lockResets: state.lockResets + 1, lockTimerMs: 0 };
 }
 
-/** Takes the head of the preview queue and refills it from the 7-bag. */
 function popNextPiece(state: GameState): {
   state: GameState;
   type: TetrominoType | null;

@@ -10,9 +10,6 @@ export const TETROMINO_TYPES: readonly TetrominoType[] = [
   "Z",
 ];
 
-// Cell offset is [column, row] inside the piece bounding box, row 0 at the
-// top. States follow the SRS spawn orientation (state 0) and rotate
-// clockwise through states 1-3.
 export type CellOffset = readonly [col: number, row: number];
 
 export const TETROMINO_ROTATIONS: Record<
@@ -203,8 +200,6 @@ export const TETROMINO_ROTATIONS: Record<
   ],
 };
 
-// Compact spawn-orientation shapes used by the hold/next previews,
-// centered inside a 4x2 preview box.
 export const PREVIEW_SHAPES: Record<TetrominoType, readonly CellOffset[]> = {
   I: [
     [0, 0],
@@ -250,12 +245,8 @@ export const PREVIEW_SHAPES: Record<TetrominoType, readonly CellOffset[]> = {
   ],
 };
 
-// SRS wall kick offsets in screen coordinates ([dx, dy] with dy positive
-// downward), keyed by "from-to" rotation state. The O piece never kicks.
 export type KickOffset = readonly [dx: number, dy: number];
 
-// Only the eight adjacent rotation transitions occur in practice; typing the
-// keys as a union keeps the lookup tables total (no runtime fallback).
 export type KickKey =
   "0-1" | "0-3" | "1-0" | "1-2" | "2-1" | "2-3" | "3-0" | "3-2";
 
@@ -383,7 +374,6 @@ export function getKickOffsets(
   to: RotationState,
 ): readonly KickOffset[] {
   const table = type === "I" ? I_KICKS : JLSTZ_KICKS;
-  // tryRotate only ever asks for adjacent transitions, so the key is total.
   const key = `${from}-${to}` as KickKey;
   return table[key];
 }

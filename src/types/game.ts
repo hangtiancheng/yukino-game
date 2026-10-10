@@ -9,17 +9,13 @@ export type RotationState = 0 | 1 | 2 | 3;
 
 export type HorizontalDirection = -1 | 0 | 1;
 
-// A board cell holds the tetromino type that locked into it, or null.
 export type Cell = TetrominoType | null;
 
-// Rows are stored top to bottom; row 0 is the visible top of the well.
 export type BoardGrid = readonly (readonly Cell[])[];
 
 export interface ActivePiece {
   type: TetrominoType;
   rotation: RotationState;
-  // Column/row of the piece bounding-box origin (SRS boxes: I is 4x4,
-  // O is 2x2, the rest are 3x3).
   x: number;
   y: number;
 }
@@ -29,7 +25,6 @@ export interface CellPosition {
   row: number;
 }
 
-// One-shot commands queued by input devices between simulation steps.
 export type GameAction =
   "hard-drop" | "hold" | "pause" | "rotate-ccw" | "rotate-cw";
 
@@ -38,8 +33,6 @@ export interface GameInput {
   right: boolean;
   softDrop: boolean;
   restart: boolean;
-  // Mutated only by replacing the whole GameInput object; the simulation
-  // reads it without mutating and the caller drains it after each step.
   actions: readonly GameAction[];
 }
 

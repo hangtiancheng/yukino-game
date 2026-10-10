@@ -18,7 +18,7 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "playwright": "playwright install",
-    "format": "prettier -w ./",
+    "format": "prettier -w ./ --experimental-cli",
     "git:config": "git config user.name hangtiancheng && git config user.email '161043261@qq.com'",
     "git:commit": "git add -A && git commit -m \"feat: Introduce new features\"",
     "git:push": "pnpm git:commit && git push origin main"

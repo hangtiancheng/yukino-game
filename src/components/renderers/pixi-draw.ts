@@ -41,8 +41,6 @@ export function drawRenderCell(graphic: Graphics, cell: RenderCell): void {
   graphic.position.set(cell.x, cell.y);
 }
 
-// Static well furniture: board backing, grid lines, and the hold/next
-// panel boxes. Drawn once per scene; labels are separate Text objects.
 export function drawStageFrame(graphic: Graphics): void {
   graphic
     .clear()

@@ -11,8 +11,6 @@ export interface GameRendererProps {
   state: GameState;
 }
 
-// The Pixi renderer draws a static scene description with no CSS
-// transitions, so it has nothing to reduce for prefers-reduced-motion.
 export interface PixiGameRendererProps {
   simulation: GameSimulation;
 }

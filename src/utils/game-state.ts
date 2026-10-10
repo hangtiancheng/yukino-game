@@ -28,12 +28,6 @@ import { createInitialGameState } from "./initial-game-state";
 import { getDropScore } from "./scoring";
 import { canPlacePiece, getGhostY, movePiece } from "./tetromino";
 
-/**
- * Advances the simulation by one frame. The update is a pipeline of pure
- * GameState -> GameState steps: buffered actions first, then DAS/ARR
- * auto-shift, gravity, and lock delay. Each step guards on phase and the
- * active piece, so no step needs to know how the previous one mutated.
- */
 export function updateGameState(
   previous: GameState,
   input: GameInput,
@@ -73,8 +67,6 @@ export function updateGameState(
       return finalizeFrame(state);
     }
     if (state.stats.piecesLocked !== lockedBefore) {
-      // A hard drop locked the piece; the spawned successor waits for the
-      // next frame, and any remaining buffered actions go with it.
       break;
     }
   }
@@ -94,7 +86,6 @@ function applyAction(state: GameState, action: GameAction): GameState {
     case "hold":
       return holdPiece(state);
     case "pause":
-      // Drained by updateGameState before reaching this point.
       return state;
     case "rotate-ccw":
       return rotateActive(state, -1);
@@ -111,10 +102,6 @@ function tickTimers(state: GameState, frameMs: number): GameState {
   };
 }
 
-/**
- * DAS/ARR horizontal auto-shift: an initial move on press, then repeats once
- * the delayed auto-shift delay has charged, at the auto-repeat rate.
- */
 function updateDas(
   state: GameState,
   input: GameInput,
@@ -155,7 +142,6 @@ function updateDas(
     arrTimerMs -= ARR_REPEAT_MS;
     const next = tryShift(shifted, direction);
     if (next === shifted) {
-      // Blocked by wall or stack; stop consuming repeat time.
       arrTimerMs = 0;
       break;
     }
@@ -164,10 +150,6 @@ function updateDas(
   return { ...shifted, arrTimerMs, dasTimerMs };
 }
 
-/**
- * Gravity, accumulated against the level's delay. Soft drop divides the
- * delay and scores one point per dropped cell as the cells are earned.
- */
 function updateGravity(
   state: GameState,
   input: GameInput,
@@ -208,17 +190,11 @@ function updateGravity(
     current.active !== null &&
     !canPlacePiece(current.board, movePiece(current.active, 0, 1))
   ) {
-    // Grounded: leftover credit must not carry into the next fall.
     fallAccumulatorMs = 0;
   }
   return { ...current, fallAccumulatorMs };
 }
 
-/**
- * Lock delay: a grounded piece locks after LOCK_DELAY_MS. Successful moves
- * and rotations reset the timer (capped by MAX_LOCK_RESETS upstream in
- * afterPieceMoved), so sliding along the stack buys time but never forever.
- */
 function updateLockDelay(state: GameState, frameMs: number): GameState {
   const active = state.active;
   if (active === null) {
@@ -245,7 +221,6 @@ function applyIdleMessage(state: GameState): GameState {
   return { ...state, message: IDLE_MESSAGE };
 }
 
-/** Keeps the cached ghost projection in sync with board and piece. */
 function finalizeFrame(state: GameState): GameState {
   const ghostY =
     state.active === null ? 0 : getGhostY(state.board, state.active);

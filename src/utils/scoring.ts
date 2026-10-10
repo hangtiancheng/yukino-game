@@ -12,8 +12,6 @@ export function getLineClearBaseScore(clearedRows: number): number {
   return LINE_CLEAR_BASE_SCORES[clearedRows] ?? 0;
 }
 
-// Line awards scale by level and difficulty; a back-to-back TETRIS earns
-// the 1.5x guideline bonus.
 export function getLineClearAward(
   clearedRows: number,
   level: number,
@@ -26,8 +24,6 @@ export function getLineClearAward(
   return Math.floor(base * level * backToBackFactor * multiplier);
 }
 
-// combo counts consecutive line clears including the current one, so the
-// first clear of a streak earns nothing extra.
 export function getComboBonus(
   combo: number,
   level: number,

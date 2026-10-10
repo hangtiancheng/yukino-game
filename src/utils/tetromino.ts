@@ -17,8 +17,6 @@ export function getPieceCells(piece: ActivePiece): CellPosition[] {
   }));
 }
 
-// SRS spawn: 3-wide boxes enter at column 3 (cols 3-5), the I piece at
-// column 3 (cols 3-6), and the O piece at column 4 (cols 4-5).
 export function createSpawnPiece(type: TetrominoType): ActivePiece {
   return { type, rotation: 0, x: type === "O" ? 4 : 3, y: 0 };
 }

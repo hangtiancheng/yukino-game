@@ -15,9 +15,6 @@ const vendorChunkMap: ReadonlyArray<readonly [string, string]> = [
 
 const releaseId = `${packageJson.name}@${packageJson.version}`;
 
-// Build output is deployed to https://hangtiancheng.github.io/yukino-game/.
-// Preview serves that built output, so it must share the base; only the
-// dev server runs at /.
 export default defineConfig(({ command, isPreview }) => {
   const base = command === "build" || isPreview ? "/yukino-game/" : "/";
   return {
@@ -90,9 +87,6 @@ export default defineConfig(({ command, isPreview }) => {
         workbox: {
           globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
           navigateFallback: `${base}index.html`,
-          // The 10MB bgm.mp3 exceeds the precache size limit; cache it on
-          // first playback instead. rangeRequests is required because the
-          // BGM streams via HTML5 audio (Range requests).
           runtimeCaching: [
             {
               urlPattern: /\.mp3$/i,

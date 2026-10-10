@@ -3,8 +3,6 @@ export const VIEWPORT_HEIGHT: number = 540;
 export const MAX_FRAME_MS: number = 32;
 export const FIXED_STEP_MS: number = 1_000 / 60;
 
-// Well geometry. The board is centered in the 960x540 stage; the hold box
-// sits on the left and the next queue on the right.
 export const BOARD_COLUMNS: number = 10;
 export const BOARD_ROWS: number = 20;
 export const CELL_SIZE: number = 24;
@@ -46,19 +44,15 @@ export const NEXT_BOX: StageBox = {
 export const NEXT_BOX_STEP: number = 78;
 export const NEXT_LABEL_POSITION: StagePoint = { x: 736, y: 84 };
 
-// Input tuning (guideline-style DAS/ARR).
 export const DAS_DELAY_MS: number = 150;
 export const ARR_REPEAT_MS: number = 30;
 export const SOFT_DROP_FACTOR: number = 20;
 
-// Lock delay with capped move resets.
 export const LOCK_DELAY_MS: number = 500;
 export const MAX_LOCK_RESETS: number = 15;
 
-// Gravity: seconds per row = (0.8 - (level - 1) * 0.007)^(level - 1).
 export const MIN_GRAVITY_MS: number = 1;
 
-// Scoring (guideline values; line awards scale by level and difficulty).
 export const LINE_CLEAR_BASE_SCORES: readonly number[] = [
   0, 100, 300, 500, 800,
 ];

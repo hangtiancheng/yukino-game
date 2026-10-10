@@ -34,7 +34,6 @@ function HostWithOwnRef({
 }
 
 beforeAll((): void => {
-  // jsdom does not implement pointer capture.
   Object.assign(HTMLElement.prototype, {
     setPointerCapture: (): void => undefined,
     releasePointerCapture: (): void => undefined,

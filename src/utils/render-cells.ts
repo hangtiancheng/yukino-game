@@ -18,8 +18,6 @@ import { getPieceCells } from "./tetromino";
 
 export type RenderCellKind = "active" | "ghost" | "hold" | "locked" | "next";
 
-// Shared scene description consumed by both the DOM and Pixi renderers so
-// they stay pixel-consistent.
 export interface RenderCell {
   key: string;
   kind: RenderCellKind;

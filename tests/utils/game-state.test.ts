@@ -183,7 +183,6 @@ describe("locking and clearing", (): void => {
     for (let row = 0; row < 4; row += 1) {
       for (let col = 0; col < BOARD_COLUMNS; col += 1) {
         if (col === 9) {
-          // Leave one gap so the rows are not full and never clear.
           continue;
         }
         board = lockCells(board, [{ col, row }], "Z");
